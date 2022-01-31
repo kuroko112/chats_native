@@ -1,0 +1,41 @@
+<script src="/socket.io/socket.io.js"></script>
+<link rel="stylesheet" href="../layout/css/style.css">
+<!-- <header class="nav-left">
+
+</header> -->
+
+
+<div id="message-container" class="send-message"></div>
+<div id="message-sender"    class="me-message"></div>
+
+<form id="message-form">
+    <input type="text" name="message" id="message-input" placeholder="Type Your message">
+    <button type="submit">Send</button>
+</form>
+
+<script>
+    const socket        = window.io()
+    const msgform       = document.querySelector('#message-form')
+    const msginput      = document.querySelector('#message-input')
+    const msgsContainer = document.querySelector('#message-container')
+    const memsgs        = document.querySelector('#message-sender')
+
+    msgform.onsubmit = e=> {
+        e.preventDefault();
+        const msg = msginput.value;
+        socket.emit('send-message', {msg})
+        msginput.value = ''
+
+    }
+
+    socket.on('send-message', ({msg}) => {
+
+        msgsContainer.innerHTML += '<p>' + msg + '</p>'
+
+    })
+
+    
+    
+   
+
+</script>
